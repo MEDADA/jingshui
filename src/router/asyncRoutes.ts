@@ -18,62 +18,89 @@ const accessRoutes: Array<RouteRecordRaw> = [
             }
         ],
         meta: {
+            alwaysShow: true,
             title: '系统设置'
         }
     },
     {
-        path: '/component',
-        redirect: '/component/form',
-        name: 'component',
+        path: '/service',
+        redirect: '/service/category',
+        name: 'service',
         component: Layout,
         children: [
             {
-                path: '/component/form',
-                name: 'form',
-                component: () => import('@/views/form/index.vue'),
+                path: '/system/category',
+                name: 'category',
+                component: () => import('@/views/service/category/index.vue'),
                 meta: {
-                    title: '表单'
+                    title: '服务类目'
                 }
             },
             {
-                path: '/component/file',
-                name: 'file',
-                component: () => import('@/views/file/file.vue'),
+                path: '/system/serviceItem',
+                name: 'serviceItem',
+                component: () => import('@/views/service/serviceItem/index.vue'),
                 meta: {
-                    title: '文件上传'
+                    title: '服务项'
                 }
             }
         ],
         meta: {
-            title: '组件'
+            alwaysShow: true,
+            title: '服务管理'
         }
     },
     {
-        path: '/user',
-        redirect: '/user/index',
-        name: 'userIndex',
+        path: '/productLayout',
+        redirect: '/product',
+        name: 'productLayout',
         component: Layout,
         children: [
             {
-                path: '/component/form',
-                name: 'form',
-                component: () => import('@/views/form/index.vue'),
+                path: '/product',
+                name: 'product',
+                component: () => import('@/views/product/index.vue'),
                 meta: {
-                    title: '表单'
+                    title: '商品管理'
                 }
-            },
+            }
+        ]
+    },
+    {
+        path: '/operate',
+        redirect: '/operate/notice',
+        name: 'operate',
+        component: Layout,
+        children: [
             {
-                path: '/component/file',
-                name: 'file',
-                component: () => import('@/views/file/file.vue'),
+                path: '/operate/notice',
+                name: 'notice',
+                component: () => import('@/views/operate/notice/index.vue'),
                 meta: {
-                    title: '文件上传'
+                    title: '消息管理'
                 }
             }
         ],
         meta: {
-            title: '组件'
+            title: '用户运营',
+            alwaysShow: true
         }
+    },
+    {
+        path: '/orderLayout',
+        redirect: '/order',
+        name: 'orderLayout',
+        component: Layout,
+        children: [
+            {
+                path: '/order',
+                name: 'order',
+                component: () => import('@/views/order/index.vue'),
+                meta: {
+                    title: '订单管理'
+                }
+            }
+        ]
     },
 
 ]

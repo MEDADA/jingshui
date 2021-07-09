@@ -1,6 +1,16 @@
 <template>
   <div>
-    <a-table :dataSource="dataSource" :columns="columns" />
+    <a-table :dataSource="tableData" :columns="tableColumns">
+      <template #handle="{row}">
+        <a-button
+            class="table-handle-btn"
+            v-for="(button,index) in tableHandles"
+            :key="index"
+            @click="button.click($event,row)">
+              {{ button.title }}
+        </a-button>
+      </template>
+    </a-table>
   </div>
 </template>
 
@@ -9,27 +19,31 @@ import {defineComponent} from 'vue'
 
 export default defineComponent({
   name: "BaseTable",
+  props: {
+    tableData: {
+      type: Array,
+      default: () => []
+    },
+    tableColumns: {
+      type: Array,
+      default: () => []
+    },
+    tableHandles: {
+      type: Array,
+      default: () => []
+    }
+  },
   setup(props) {
-    const dataSource: any[] = [
-      {
-        key: '1',
-        name: '胡彦斌',
-        age: 32,
-        address: '西湖区湖底公园1号',
-      },
-    ]
-    const columns: any[] = [
-      {
-        title: '姓名',
-        dataIndex: 'name',
-        key: 'name',
-      },
-    ]
-    return {dataSource,columns}
+    const tableData = props.tableData;
+    const tableColumns = props.tableColumns;
+    const tableHandles = props.tableHandles
+    return {tableData, tableColumns, tableHandles}
   }
 })
 </script>
 
 <style scoped>
-
+.table-handle-btn{
+  margin-right:10px;
+}
 </style>
