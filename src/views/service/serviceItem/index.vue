@@ -1,14 +1,22 @@
 <template>
   <div>
+    <BaseFilter :filters="filters">
+      <template #end>
 
+      </template>
+    </BaseFilter>
+    <BaseTable :tableData="tableData" :tableColumns="tableColumns" :tableHandles="tableHandles"></BaseTable>
   </div>
 </template>
 
 <script lang="ts">
 import {defineComponent, ref} from 'vue'
+import BaseFilter from "@/components/Common/BaseFilter.vue";
+import BaseTable from "@/components/Table/BaseTable.vue";
 
 export default defineComponent({
   name: "index",
+  components: {BaseTable, BaseFilter},
   setup() {
     const filters = ref([
       {
@@ -38,7 +46,14 @@ export default defineComponent({
       {
         type: 'button',
         label: '搜索',
-        handle: (form) => {
+        handle: (form:object) => {
+          console.log(form);
+        }
+      },
+      {
+        type: 'button',
+        label: '添加',
+        handle: (form:object) => {
           console.log(form);
         }
       }

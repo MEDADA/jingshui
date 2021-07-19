@@ -1,13 +1,15 @@
 <template>
   <div>
     <a-table :dataSource="tableData" :columns="tableColumns">
-      <template #handle="{row}">
+      <template #handle="e">
         <a-button
             class="table-handle-btn"
             v-for="(button,index) in tableHandles"
             :key="index"
-            @click="button.click($event,row)">
-              {{ button.title }}
+            @click="button.click($event,e)">
+          <div>
+            {{ button.title }}
+          </div>
         </a-button>
       </template>
     </a-table>
@@ -43,7 +45,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.table-handle-btn{
-  margin-right:10px;
+.table-handle-btn {
+  margin-right: 10px;
 }
 </style>

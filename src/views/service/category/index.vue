@@ -42,7 +42,7 @@ export default defineComponent({
       {
         type: 'button',
         label: '搜索',
-        handle: (form) => {
+        handle: (form:object) => {
           console.log(form);
         }
       }
@@ -80,13 +80,15 @@ export default defineComponent({
     const tableHandles = [
       {
         title: '编辑',
-        click: () => {
+        click: (e,data) => {
+          console.log(e);
+          console.log(data)
           console.log('编辑 click')
         }
       },
       {
         title: '删除',
-        click: () => {
+        click: (e) => {
           console.log('删除 click')
         }
       }

@@ -3,8 +3,7 @@
     <LayoutSideBar />
     <a-layout>
       <LayoutHeader />
-      <a-layout-content style="margin: 0 16px">
-        <BaseCrumb></BaseCrumb>
+      <a-layout-content style="margin:16px">
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px',position:'relative',overflow:'hidden' }">
           <router-view v-slot="{ Component }">
             <transition name="fade">
@@ -28,7 +27,6 @@ import {
 import {defineComponent, provide,watch} from 'vue';
 import {useRouter} from "vue-router";
 import LayoutSideBar from "@/components/Layout/LayoutSideBar.vue";
-import BaseCrumb from "@/components/Layout/BaseCrumb.vue";
 import LayoutFooter from "@/components/Layout/LayoutFooter.vue";
 import LayoutHeader from "@/components/Layout/LayoutHeader.vue";
 
@@ -42,7 +40,6 @@ export default defineComponent({
   components: {
     LayoutHeader,
     LayoutFooter,
-    BaseCrumb,
     LayoutSideBar,
     PieChartOutlined,
     DesktopOutlined,
