@@ -80,7 +80,7 @@ export default defineComponent({
     const tableHandles = [
       {
         title: '编辑',
-        click: (e,data) => {
+        click: (e:object,data:object) => {
           console.log(e);
           console.log(data)
           console.log('编辑 click')

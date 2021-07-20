@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a-table :dataSource="tableData" :columns="tableColumns">
-      <template #handle="e">
+    <a-table :dataSource="tableData" :columns="tableColumns" rowKey="prop">
+      <template #handle="e" v-if="tableHandles.length > 0">
         <a-button
             class="table-handle-btn"
             v-for="(button,index) in tableHandles"
