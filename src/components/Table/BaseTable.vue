@@ -1,15 +1,14 @@
 <template>
   <div>
-    <a-table :dataSource="tableData" :columns="tableColumns" rowKey="prop">
-      <template #handle="e" v-if="tableHandles.length > 0">
+    <a-table :dataSource="tableData" :columns="tableColumns" rowKey="prop" key="prop">
+      <template #handle="e" v-if="tableHandles && Array.isArray(tableHandles) && tableHandles.length > 0">
         <a-button
             class="table-handle-btn"
             v-for="(button,index) in tableHandles"
             :key="index"
-            @click="button.click($event,e)">
-          <div>
-            {{ button.title }}
-          </div>
+            v-bind="button.option || {}"
+            @click="button.click(e)">
+          {{ button.title }}
         </a-button>
       </template>
     </a-table>
@@ -17,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {computed, defineComponent} from 'vue'
 
 export default defineComponent({
   name: "BaseTable",
@@ -36,10 +35,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const tableData = props.tableData;
-    const tableColumns = props.tableColumns;
-    const tableHandles = props.tableHandles
-    return {tableData, tableColumns, tableHandles}
+
+    return {}
   }
 })
 </script>

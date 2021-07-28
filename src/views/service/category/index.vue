@@ -1,7 +1,8 @@
 <template>
   <div>
-    <BaseFilter :filters="filters"></BaseFilter>
+    <BaseFilter :filters="tableFilters"></BaseFilter>
     <BaseTable :tableData="tableData" :tableColumns="tableColumns" :tableHandles="tableHandles"></BaseTable>
+    <BaseDialog :visible="dialog.visible" :data="dialog.data" :form="dialog.form" @close="dialogClose"></BaseDialog>
   </div>
 </template>
 
@@ -14,7 +15,21 @@ export default defineComponent({
   name: "index",
   components: {BaseFilter, BaseTable},
   setup() {
-    const filters = ref([
+    /**
+     * dialog
+     */
+    const dialog = reactive({
+      visible:ref<boolean>(false),
+      data:{},
+      form:[]
+    });
+    const dialogClose = () => {
+      dialogVisible.value = false;
+    };
+    /**
+     * table
+     */
+    const tableFilters = ref([
       {
         type: 'input',
         prop: 'a',
@@ -77,7 +92,7 @@ export default defineComponent({
         slots: {customRender: 'handle'},
       },
     ]);
-    const tableHandles = [
+    const tableHandles = ref([
       {
         title: '编辑',
         click: (e:object,data:object) => {
@@ -92,8 +107,8 @@ export default defineComponent({
           console.log('删除 click')
         }
       }
-    ]
-    return {filters, tableData, tableColumns, tableHandles}
+    ]);
+    return {tableFilters, tableData, tableColumns, tableHandles}
   }
 })
 </script>
