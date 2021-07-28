@@ -7,24 +7,57 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, ref, reactive} from 'vue'
 import BaseTable from "@/components/Table/BaseTable.vue";
 import BaseFilter from "@/components/Common/BaseFilter.vue";
+import BaseDialog from "@/components/BaseDialog.vue";
 
 export default defineComponent({
   name: "index",
-  components: {BaseFilter, BaseTable},
+  components: {BaseDialog, BaseFilter, BaseTable},
   setup() {
     /**
      * dialog
      */
     const dialog = reactive({
-      visible:ref<boolean>(false),
-      data:{},
-      form:[]
+      visible: ref<boolean>(false),
+      data: {
+        a:''
+      },
+      form: [
+        {
+          label:'类目名称：',
+          type:'input',
+          prop:'a',
+          rules:{
+            required: true,
+            message: 'Please input name',
+          }
+        },
+        {
+          type: 'select',
+          prop: 'b',
+          label: '状态',
+          options: [
+            {
+              label: '全部',
+              value: null
+            },
+            {
+              label: '可用',
+              value: 1
+            },
+            {
+              label: '禁用',
+              value: 0
+            }
+          ]
+        },
+      ]
     });
     const dialogClose = () => {
-      dialogVisible.value = false;
+      dialog.visible = false;
+      dialog.data = {};
     };
     /**
      * table
@@ -57,7 +90,7 @@ export default defineComponent({
       {
         type: 'button',
         label: '搜索',
-        handle: (form:object) => {
+        handle: (form: object) => {
           console.log(form);
         }
       }
@@ -95,10 +128,11 @@ export default defineComponent({
     const tableHandles = ref([
       {
         title: '编辑',
-        click: (e:object,data:object) => {
+        click: (e: object) => {
           console.log(e);
-          console.log(data)
           console.log('编辑 click')
+          dialog.visible = true;
+          dialog.data = {...e.text}
         }
       },
       {
@@ -108,7 +142,7 @@ export default defineComponent({
         }
       }
     ]);
-    return {tableFilters, tableData, tableColumns, tableHandles}
+    return {tableFilters, tableData, tableColumns, tableHandles, dialog, dialogClose}
   }
 })
 </script>

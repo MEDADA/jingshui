@@ -1,12 +1,12 @@
 <template>
   <a-modal
-      title="Title"
+      :title="title"
       :visible="visible"
       :confirm-loading="params.confirmLoading"
       @ok="handleOk"
       @cancel="handleCancel"
   >
-    <BaseDynamicForm :form="formList" :data="data" @update:data="updateData"></BaseDynamicForm>
+    <BaseDynamicForm ref="formRef" :form="formList" :data="data" @update:data="updateData"></BaseDynamicForm>
   </a-modal>
 </template>
 
@@ -27,6 +27,9 @@ export default defineComponent({
     },
     form: {
       type: Array, default: () => []
+    },
+    title: {
+      type: String, default: '弹框'
     }
   },
   methods: {},
@@ -35,14 +38,22 @@ export default defineComponent({
       confirmLoading: false
     })
     const formList = ref([...props.form]);
+    const formRef = ref();
     const handleOk = () => {
+      formRef.value._.refs.form.validate()
+          .then(() => {
+            console.log('values', f.data);
+          })
+          .catch(error => {
+            console.log('error', error);
+          });
       dialogClear();
     }
-    const form = reactive({
+    const f = reactive({
       data: {} as object
     })
     const updateData = (e: object) => {
-      form.data = {...e};
+      f.data = {...e};
     };
     const handleCancel = () => {
       console.log('close')
@@ -58,7 +69,8 @@ export default defineComponent({
       handleOk,
       handleCancel,
       updateData,
-      form,
+      f,
+      formRef
     }
   },
   components: {BaseDynamicForm}

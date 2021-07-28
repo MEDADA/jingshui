@@ -1,23 +1,100 @@
 <template>
   <div>
     <BaseFilter :filters="filters">
-      <template #end>
-
-      </template>
     </BaseFilter>
     <BaseTable :tableData="tableData" :tableColumns="tableColumns" :tableHandles="tableHandles"></BaseTable>
+    <BaseDialog :visible="dialog.visible" :data="dialog.data" :form="dialog.form" @close="dialogClose"></BaseDialog>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue'
+import {defineComponent, reactive, ref} from 'vue'
 import BaseFilter from "@/components/Common/BaseFilter.vue";
 import BaseTable from "@/components/Table/BaseTable.vue";
+import _default from "ant-design-vue/es/vc-trigger/Popup";
+import visible = _default.props.visible;
+import BaseDialog from "@/components/BaseDialog.vue";
 
 export default defineComponent({
   name: "index",
-  components: {BaseTable, BaseFilter},
+  components: {BaseDialog, BaseTable, BaseFilter},
   setup() {
+    //dialog
+    const dialog = reactive({
+      visible: false,
+      data: {},
+      form: [
+        {
+          label: '服务项名称',
+          type: 'input',
+          prop: 'a',
+          rules: [
+            {
+              required: true,
+              message:'请输入服务项名称'
+            }
+          ]
+        },
+        {
+          label: '所属服务类目',
+          type: 'select',
+          prop: 'b',
+          rules: [
+            {
+              required: true,
+              message:'请输入所属服务类目'
+            }
+          ]
+        },
+        {
+          label: '服务项预估价',
+          type: 'input',
+          prop: 'c',
+          rules: [
+            {
+              required: true,
+              message:'请输入服务项预估价'
+            }
+          ]
+        },
+        {
+          label: '服务项提示',
+          type: 'textarea',
+          prop: 'd',
+          rules: [
+            {
+              required: true,
+              message:'请输入服务项提示'
+            }
+          ]
+        },
+        {
+          label: '状态',
+          type: 'select',
+          prop: 'e',
+          options: [
+            {
+              label: '可用',
+              value: '1'
+            },
+            {
+              label: '禁用',
+              value: '0'
+            }
+          ],
+          rules: [
+            {
+              required: true,
+              message:'请选择状态'
+            }
+          ]
+        }
+      ]
+    })
+    const dialogClose = ()=>{
+      dialog.visible = false;
+      dialog.data = {}
+    }
     const filters = ref([
       {
         type: 'input',
@@ -46,14 +123,14 @@ export default defineComponent({
       {
         type: 'button',
         label: '搜索',
-        handle: (form:object) => {
+        handle: (form: object) => {
           console.log(form);
         }
       },
       {
         type: 'button',
         label: '添加',
-        handle: (form:object) => {
+        handle: (form: object) => {
           console.log(form);
         }
       }
@@ -71,10 +148,29 @@ export default defineComponent({
         key: 'id'
       },
       {
-        title: '类目名称',
+        title: '服务项名称',
         dataIndex: '2',
-        key: '2',
-        width: '30%'
+        key: '2'
+      },
+      {
+        title: '所属服务类目ID',
+        dataIndex: '2',
+        key: '2'
+      },
+      {
+        title: '所属服务类目名称',
+        dataIndex: '2',
+        key: '2'
+      },
+      {
+        title: '服务项预估价',
+        dataIndex: '2',
+        key: '2'
+      },
+      {
+        title: '服务项提示',
+        dataIndex: '2',
+        key: '2'
       },
       {
         title: '状态',
@@ -93,6 +189,7 @@ export default defineComponent({
         title: '编辑',
         click() {
           console.log('编辑 click')
+          dialog.visible = true;
         }
       },
       {
@@ -102,7 +199,7 @@ export default defineComponent({
         }
       }
     ]
-    return {filters, tableData, tableColumns, tableHandles}
+    return {filters, tableData, tableColumns, tableHandles,dialog,dialogClose}
   }
 })
 </script>
