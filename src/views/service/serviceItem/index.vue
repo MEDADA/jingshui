@@ -8,12 +8,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, ref} from 'vue'
+import {createVNode, defineComponent, reactive, ref} from 'vue'
 import BaseFilter from "@/components/Common/BaseFilter.vue";
 import BaseTable from "@/components/Table/BaseTable.vue";
 import _default from "ant-design-vue/es/vc-trigger/Popup";
 import visible = _default.props.visible;
 import BaseDialog from "@/components/BaseDialog.vue";
+import {Modal} from "ant-design-vue";
+import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
 
 export default defineComponent({
   name: "index",
@@ -31,7 +33,7 @@ export default defineComponent({
           rules: [
             {
               required: true,
-              message:'请输入服务项名称'
+              message: '请输入服务项名称'
             }
           ]
         },
@@ -42,7 +44,7 @@ export default defineComponent({
           rules: [
             {
               required: true,
-              message:'请输入所属服务类目'
+              message: '请输入所属服务类目'
             }
           ]
         },
@@ -53,7 +55,7 @@ export default defineComponent({
           rules: [
             {
               required: true,
-              message:'请输入服务项预估价'
+              message: '请输入服务项预估价'
             }
           ]
         },
@@ -64,7 +66,7 @@ export default defineComponent({
           rules: [
             {
               required: true,
-              message:'请输入服务项提示'
+              message: '请输入服务项提示'
             }
           ]
         },
@@ -85,13 +87,13 @@ export default defineComponent({
           rules: [
             {
               required: true,
-              message:'请选择状态'
+              message: '请选择状态'
             }
           ]
         }
       ]
     })
-    const dialogClose = ()=>{
+    const dialogClose = () => {
       dialog.visible = false;
       dialog.data = {}
     }
@@ -187,19 +189,34 @@ export default defineComponent({
     const tableHandles = [
       {
         title: '编辑',
-        click() {
+        click(data: object) {
           console.log('编辑 click')
           dialog.visible = true;
+          dialog.data = {...data}
         }
       },
       {
         title: '删除',
         click: () => {
           console.log('删除 click')
+          Modal.confirm({
+            title: '确定删除？',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: ``,
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+              console.log('OK');
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+          });
         }
       }
     ]
-    return {filters, tableData, tableColumns, tableHandles,dialog,dialogClose}
+    return {filters, tableData, tableColumns, tableHandles, dialog, dialogClose}
   }
 })
 </script>

@@ -7,10 +7,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, reactive} from 'vue'
+import {defineComponent, ref, reactive, createVNode} from 'vue'
 import BaseTable from "@/components/Table/BaseTable.vue";
 import BaseFilter from "@/components/Common/BaseFilter.vue";
 import BaseDialog from "@/components/BaseDialog.vue";
+import {Modal} from "ant-design-vue";
+import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
 
 export default defineComponent({
   name: "index",
@@ -21,9 +23,7 @@ export default defineComponent({
      */
     const dialog = reactive({
       visible: ref<boolean>(false),
-      data: {
-        a:''
-      },
+      data: {},
       form: [
         {
           label:'类目名称：',
@@ -139,6 +139,20 @@ export default defineComponent({
         title: '删除',
         click: (e) => {
           console.log('删除 click')
+          Modal.confirm({
+            title: '确定删除？',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: ``,
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+              console.log('OK');
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+          });
         }
       }
     ]);

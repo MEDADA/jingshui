@@ -7,10 +7,12 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, reactive, ref, UnwrapRef} from 'vue'
+import {createVNode, defineComponent, reactive, ref, UnwrapRef} from 'vue'
 import BaseFilter from "@/components/Common/BaseFilter.vue";
 import BaseTable from "@/components/Table/BaseTable.vue";
 import BaseDialog from "@/components/BaseDialog.vue";
+import {Modal} from "ant-design-vue";
+import {ExclamationCircleOutlined} from "@ant-design/icons-vue";
 
 interface Dialog {
   visible: boolean;
@@ -126,7 +128,12 @@ export default defineComponent({
       },
       {
         type: 'button',
-        label: '添加'
+        label: '添加',
+        handle:()=>{
+          console.log('add');
+          dialog.visible = true;
+          dialog.data = {}
+        }
       }
     ]);
     const tableData = ref([
@@ -188,6 +195,20 @@ export default defineComponent({
         title: '删除',
         click: (e) => {
           console.log('删除 click')
+          Modal.confirm({
+            title: '确定删除？',
+            icon: createVNode(ExclamationCircleOutlined),
+            content: ``,
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+              console.log('OK');
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+          });
         }
       }
     ]);
